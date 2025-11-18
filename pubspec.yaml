@@ -1,0 +1,107 @@
+name: tambur_create
+description: "A new Flutter project."
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  modal_bottom_sheet: ^3.0.0
+  cupertino_icons: ^1.0.8
+  fluttertoast: ^8.2.12
+  flutter_smart_dialog: ^4.9.8+8
+  flutter_bloc: ^8.1.6
+  equatable: ^2.0.5
+  http: ^1.2.2
+  dartz: ^0.10.1
+  get_it: ^8.0.2
+  flutter_secure_storage: ^9.2.2
+  go_router: ^14.3.0
+  hive_flutter: ^1.1.0
+  path_provider: ^2.1.5
+  flutter_holo_date_picker: ^2.0.0
+  octo_image: ^2.1.0
+  flutter_svg_provider: ^1.0.7
+  hive_generator: ^2.0.1
+  shortid: ^0.1.2
+  logger: ^2.0.2+1
+  image_picker: ^1.1.2
+  flutter_screenutil: ^5.9.3
+  intl: ^0.19.0
+  mask_text_input_formatter: ^2.9.0
+  shimmer: ^3.0.0
+  lottie: ^3.1.3
+  permission_handler: ^11.3.1
+  flutter_svg: ^2.0.16
+  accordion: ^2.6.0
+  cached_network_image: ^3.4.1
+  auto_size_text: ^3.0.0
+  package_info_plus: ^8.2.1
+  url_launcher: ^6.3.1
+  # camera: ^0.11.1  # Temporarily commented out
+  pin_input_text_field: ^4.5.2
+  sms_autofill: ^2.4.1
+  connectivity_plus: ^6.1.4
+  internet_connection_checker: ^3.0.1
+  azlistview: ^2.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.13
+  freezed: ^2.4.7
+  freezed_annotation: ^2.4.1
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.4.2
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/icon.png"
+  remove_alpha_ios: true
+  adaptive_icon_background: "#FFFFFF"
+  min_sdk_android: 21
+  web:
+    generate: false
+  windows:
+    generate: false
+  macos:
+    generate: false
+  ios_content_mode: center
+  # Generate all possible iOS icon sizes
+  # This will include the missing iPad icons (152x152, 167x167) that were causing validation errors
+
+flutter_native_splash:
+  android: true
+  ios: true
+  web: false
+  color: "#ffffff"
+  image: "assets/image/profpack_logo.png"
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - assets/image/
+    - assets/icons/
+    - assets/icon/
+    - assets/animations/
+
+  fonts:
+    - family: SpaceMono
+      fonts:
+        - asset: assets/fonts/space_mono.ttf
+    - family: VelaSans
+      fonts:
+        - asset: assets/fonts/VelaSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/VelaSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/VelaSans-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/VelaSans-Regular.ttf
+          weight: 400
