@@ -199,15 +199,15 @@ class _OtkFormPageState extends State<OtkFormPage> {
                                       return TamburWidget(
                                         item: item,
                                         onTap: () {
-                                          Navigator.of(context)
-                                              .push(
-                                                TamburDetailPage.route(item),
-                                              )
-                                              .then((value) {
-                                                context.read<OtkBloc>().add(
-                                                  const GetListTamburEvent(),
-                                                );
-                                              });
+                                          // Navigator.of(context)
+                                          //     .push(
+                                          //       TamburDetailPage.route(item),
+                                          //     )
+                                          //     .then((value) {
+                                          //       context.read<OtkBloc>().add(
+                                          //         const GetListTamburEvent(),
+                                          //       );
+                                          //     });
                                         },
                                       );
                                     },

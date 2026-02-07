@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:logger/logger.dart';
 import 'package:tambur_create/core/error/exceptions.dart';
 import 'package:tambur_create/core/error/failure.dart';
 import 'package:tambur_create/core/services/logger_service.dart';

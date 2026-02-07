@@ -22,24 +22,48 @@ class TamburDetailPage extends StatelessWidget {
   }
 }
 
-class TamburDetailView extends StatelessWidget {
+class TamburDetailView extends StatefulWidget {
   final Tambur tambur;
 
-  TamburDetailView({super.key, required this.tambur});
+  const TamburDetailView({super.key, required this.tambur});
 
+  @override
+  State<TamburDetailView> createState() => _TamburDetailViewState();
+}
+
+class _TamburDetailViewState extends State<TamburDetailView> {
   final TextEditingController numberController = TextEditingController();
+
   final TextEditingController dateController = TextEditingController();
+
   final TextEditingController shiftController = TextEditingController();
+
   final TextEditingController radiusController = TextEditingController();
+
   final TextEditingController formatController = TextEditingController();
+
+
+  @override
+  void initState() {
+    super.initState();
+    _initControllers();
+  }
+
+  void _initControllers() {
+    numberController.text = widget.tambur.tamburNumber ?? '-';
+    dateController.text = widget.tambur.createdAt != null
+        ? '${widget.tambur.createdAt!.day} ${_getMonthName(widget.tambur.createdAt!.month)} '
+              '${widget.tambur.createdAt!.hour}:${widget.tambur.createdAt!.minute}'
+        : '-';
+    formatController.text = '4250';
+  }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
-    numberController.text = tambur.tamburNumber ?? '-';
-    dateController.text = tambur.createdAt != null
-        ? '${tambur.createdAt!.day} ${_getMonthName(tambur.createdAt!.month)} '
-              '${tambur.createdAt!.hour}:${tambur.createdAt!.minute}'
-        : '-';
 
     return CupertinoPageScaffold(
       backgroundColor: CupertinoColors.systemGroupedBackground,
@@ -122,7 +146,7 @@ class TamburDetailView extends StatelessWidget {
 
                       context.read<OtkBloc>().add(
                         UpdateTamburEvent(
-                          tamburId: tambur.id!,
+                          tamburId: widget.tambur.id!,
                           shift: shift,
                           radius: radius,
                           format: format,

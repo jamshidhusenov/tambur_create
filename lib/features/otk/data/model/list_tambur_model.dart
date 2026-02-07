@@ -67,7 +67,7 @@ class Tambur {
     String? shift;
     String? radius;
     int? format;
-    String? brand;
+    int? brand;
     List<dynamic>? dampness;
     List<dynamic>? densities;
     List<dynamic>? thicknesses;
@@ -102,7 +102,7 @@ class Tambur {
         String? shift,
         String? radius,
         int? format,
-        String? brand,
+        int? brand,
         List<dynamic>? dampness,
         List<dynamic>? densities,
         List<dynamic>? thicknesses,
@@ -143,8 +143,8 @@ class Tambur {
         thicknesses: json["thicknesses"] == null ? [] : List<dynamic>.from(json["thicknesses"]!.map((x) => x)),
         burstStrengths: json["burst_strengths"] == null ? [] : List<dynamic>.from(json["burst_strengths"]!.map((x) => x)),
         punctureResistances: json["puncture_resistances"] == null ? [] : List<dynamic>.from(json["puncture_resistances"]!.map((x) => x)),
-        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]).toLocal(),
+        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]).toLocal(),
         createdBy: json["created_by"],
         updatedBy: json["updated_by"],
     );
