@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tambur_create/core/error/failure.dart';
 import 'package:tambur_create/features/otk/data/model/list_tambur_model.dart';
+import 'package:tambur_create/features/otk/domain/entities/brand_entity.dart';
 import 'package:tambur_create/features/otk/domain/repositories/otk_repository.dart';
 
 class OtkUseCase implements OtkRepository {
@@ -20,8 +21,15 @@ class OtkUseCase implements OtkRepository {
     required String shift,
     required int radius,
     required int format,
+    int? brand,
   }) {
-    return repository.updateTambur(tamburId: tamburId, shift: shift, radius: radius, format: format);
+    return repository.updateTambur(
+      tamburId: tamburId,
+      shift: shift,
+      radius: radius,
+      format: format,
+      brand: brand,
+    );
   }
 
   @override
@@ -38,5 +46,10 @@ class OtkUseCase implements OtkRepository {
     XFile? carImage,
   ) {
     return repository.updateWastePaper(id, percent, weight, comment, carImage);
+  }
+
+  @override
+  Future<Either<Failure, List<BrandEntity>>> getBrands() {
+    return repository.getBrands();
   }
 }

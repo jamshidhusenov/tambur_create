@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tambur_create/core/ui/dialog_utils.dart';
 import 'package:tambur_create/features/otk/data/model/list_tambur_model.dart';
+import 'package:tambur_create/features/otk/domain/entities/brand_entity.dart';
 import 'package:tambur_create/features/otk/domain/use_cases/otk_use_case.dart';
 
 part 'otk_event.dart';
@@ -26,6 +27,7 @@ class OtkBloc extends Bloc<OtkEvent, OtkState> {
     on<UpdateWastePaperEvent>(_onUpdateWastePaper);
     on<CreateTamburEvent>(_onCreateTambur);
     on<UpdateTamburEvent>(_onUpdateTambur);
+    on<GetBrandsEvent>(_onGetBrands);
   }
 
   Future<void> _onGetListTambur(
@@ -62,6 +64,7 @@ class OtkBloc extends Bloc<OtkEvent, OtkState> {
       shift: event.shift,
       radius: event.radius,
       format: event.format,
+      brand: event.brand,
     );
 
     result.fold(
@@ -72,6 +75,27 @@ class OtkBloc extends Bloc<OtkEvent, OtkState> {
       (success) {
         DialogUtils.dismissLoading();
         event.onSuccess.call();
+      },
+    );
+  }
+
+  Future<void> _onGetBrands(
+    GetBrandsEvent event,
+    Emitter<OtkState> emit,
+  ) async {
+    final currentState = state;
+    final result = await _otkUseCase.getBrands();
+
+    result.fold(
+      (failure) {
+        DialogUtils.showErrorToast(failure.message);
+      },
+      (brands) {
+        if (currentState is OtkSuccess) {
+          emit(currentState.copyWith(brands: brands));
+        } else {
+          emit(OtkSuccess(listTambur: ListTamburModel(results: const []), brands: brands));
+        }
       },
     );
   }

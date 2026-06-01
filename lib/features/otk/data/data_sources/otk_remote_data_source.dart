@@ -41,6 +41,7 @@ Future<http.Response> updateTambur({
   required String shift,
   required int radius,
   required int format,
+  int? brand,
 }) async {
   return _tokenService.makeAuthenticatedRequest((token) async {
     final headers = {
@@ -48,11 +49,17 @@ Future<http.Response> updateTambur({
       'Authorization': 'Bearer $token',
     };
 
-    final body = jsonEncode({
+    final Map<String, dynamic> bodyMap = {
       'shift': shift,
       'radius': radius,
       'format': format,
-    });
+      'is_updated': true,
+    };
+    if (brand != null) {
+      bodyMap['brand'] = brand;
+    }
+
+    final body = jsonEncode(bodyMap);
 
     final response = await _client.patch(
       '$baseUrl/api/v1/product/tambur/$tamburId/update/',
@@ -79,6 +86,23 @@ Future<http.Response> updateTambur({
       );
 
       LoggerService.d(response.body);
+      return response;
+    });
+  }
+
+  Future<http.Response> getBrands() async {
+    return _tokenService.makeAuthenticatedRequest((token) async {
+      final headers = {
+        'accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      final response = await _client.get(
+        '$baseUrl/api/v1/product/brand/small/list/',
+        headers: headers,
+      );
+
+      LoggerService.d('Get Brands Response: ${response.body}');
       return response;
     });
   }

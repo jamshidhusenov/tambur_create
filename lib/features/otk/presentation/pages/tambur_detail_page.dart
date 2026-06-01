@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:tambur_create/core/theme/app_colors.dart';
 import 'package:tambur_create/core/ui/dialog_utils.dart';
 import 'package:tambur_create/features/otk/data/model/list_tambur_model.dart';
+import 'package:tambur_create/features/otk/domain/entities/brand_entity.dart';
 import 'package:tambur_create/features/otk/presentation/manager/otk_bloc.dart';
 import 'package:tambur_create/features/otk/presentation/widgets/textfiled_widget.dart';
 
@@ -33,20 +34,17 @@ class TamburDetailView extends StatefulWidget {
 
 class _TamburDetailViewState extends State<TamburDetailView> {
   final TextEditingController numberController = TextEditingController();
-
   final TextEditingController dateController = TextEditingController();
-
   final TextEditingController shiftController = TextEditingController();
-
   final TextEditingController radiusController = TextEditingController();
-
   final TextEditingController formatController = TextEditingController();
-
+  int? selectedBrandId;
 
   @override
   void initState() {
     super.initState();
     _initControllers();
+    _fetchBrandsIfNeeded();
   }
 
   void _initControllers() {
@@ -56,15 +54,127 @@ class _TamburDetailViewState extends State<TamburDetailView> {
               '${widget.tambur.createdAt!.hour}:${widget.tambur.createdAt!.minute}'
         : '-';
     formatController.text = '4250';
+    selectedBrandId = widget.tambur.brand;
   }
 
+  void _fetchBrandsIfNeeded() {
+    final otkState = context.read<OtkBloc>().state;
+    if (otkState is OtkSuccess && otkState.brands == null) {
+      context.read<OtkBloc>().add(const GetBrandsEvent());
+    } else if (otkState is! OtkSuccess) {
+      context.read<OtkBloc>().add(const GetBrandsEvent());
+    }
+  }
 
+  void _showBrandPicker(BuildContext context, List<BrandEntity> brands) {
+    if (brands.isEmpty) {
+      DialogUtils.showErrorToast("Список брендов пуст или еще загружается");
+      return;
+    }
 
-
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 350,
+          padding: const EdgeInsets.only(top: 6.0),
+          color: CupertinoColors.systemBackground.resolveFrom(context),
+          child: SafeArea(
+            top: false,
+            child: Column(
+              children: [
+                Container(
+                  height: 44,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: CupertinoColors.systemGrey5,
+                        width: 0.5,
+                      ),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CupertinoButton(
+                        padding: EdgeInsets.zero,
+                        child: const Text('Отмена', style: TextStyle(color: CupertinoColors.systemRed)),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                      const Text(
+                        'Выберите бренд',
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      CupertinoButton(
+                        padding: EdgeInsets.zero,
+                        child: const Text('Готово', style: TextStyle(color: CupertinoColors.activeBlue)),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: brands.length,
+                    itemBuilder: (context, index) {
+                      final brand = brands[index];
+                      final isSelected = brand.id == selectedBrandId;
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedBrandId = brand.id; 
+                          });
+                          Navigator.pop(context);
+                        },
+                        behavior: HitTestBehavior.opaque,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: CupertinoColors.systemGrey6,
+                                width: 0.5,
+                              ),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                brand.title,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                                  color: isSelected ? AppColors.blue : Colors.black,
+                                ),
+                              ),
+                              if (isSelected)
+                                const Icon(
+                                  CupertinoIcons.check_mark,
+                                  color: AppColors.blue,
+                                  size: 20,
+                                ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return CupertinoPageScaffold(
       backgroundColor: CupertinoColors.systemGroupedBackground,
       navigationBar: const CupertinoNavigationBar(
@@ -92,6 +202,71 @@ class _TamburDetailViewState extends State<TamburDetailView> {
                 readOnly: true,
                 rightWidget: const SizedBox(),
                 textStyle: const TextStyle(fontSize: 16, color: AppColors.blue),
+              ),
+              const SizedBox(height: 12),
+
+              /// Выбор бренда
+              BlocBuilder<OtkBloc, OtkState>(
+                builder: (context, state) {
+                  List<BrandEntity> brands = [];
+                  if (state is OtkSuccess && state.brands != null) {
+                    brands = state.brands!;
+                  }
+
+                  final selectedBrand = brands.firstWhere(
+                    (b) => b.id == selectedBrandId,
+                    orElse: () => const BrandEntity(id: -1, title: ''),
+                  );
+                  final brandText = selectedBrand.id != -1 ? selectedBrand.title : 'Выберите бренд';
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Бренд",
+                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(height: 6),
+                      GestureDetector(
+                        onTap: () => _showBrandPicker(context, brands),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.06),
+                                blurRadius: 6,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  brandText,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: selectedBrand.id != -1
+                                        ? Colors.black
+                                        : CupertinoColors.placeholderText,
+                                  ),
+                                ),
+                              ),
+                              const Icon(
+                                CupertinoIcons.chevron_down,
+                                color: CupertinoColors.systemGrey,
+                                size: 18,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
               const SizedBox(height: 12),
 
@@ -137,9 +312,9 @@ class _TamburDetailViewState extends State<TamburDetailView> {
                       final radius = int.tryParse(radiusController.text) ?? 0;
                       final format = int.tryParse(formatController.text) ?? 0;
 
-                      if (shift.isEmpty || radius <= 0 || format <= 0) {
+                      if (shift.isEmpty || radius <= 0 || format <= 0 || selectedBrandId == null) {
                         DialogUtils.showErrorToast(
-                          'Please fill all fields with valid values',
+                          'Please fill all fields with valid values, including the brand selection',
                         );
                         return;
                       }
@@ -150,6 +325,7 @@ class _TamburDetailViewState extends State<TamburDetailView> {
                           shift: shift,
                           radius: radius,
                           format: format,
+                          brand: selectedBrandId,
                           onSuccess: () {
                             Navigator.pop(
                               context,

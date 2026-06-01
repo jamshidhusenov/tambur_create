@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tambur_create/core/error/exceptions.dart';
@@ -6,6 +7,8 @@ import 'package:tambur_create/core/error/failure.dart';
 import 'package:tambur_create/core/services/logger_service.dart';
 import 'package:tambur_create/features/otk/data/data_sources/otk_remote_data_source.dart';
 import 'package:tambur_create/features/otk/data/model/list_tambur_model.dart';
+import 'package:tambur_create/features/otk/data/model/brand_model.dart';
+import 'package:tambur_create/features/otk/domain/entities/brand_entity.dart';
 import 'package:tambur_create/features/otk/domain/repositories/otk_repository.dart';
 
 class OtkRepositoryImpl implements OtkRepository {
@@ -31,12 +34,13 @@ class OtkRepositoryImpl implements OtkRepository {
     });
   }
 
- @override
+  @override
 Future<Either<Failure, bool>> updateTambur({
   required int tamburId,
   required String shift,
   required int radius,
   required int format,
+  int? brand,
 }) async {
   try {
     LoggerService.d('updateTambur');
@@ -46,6 +50,7 @@ Future<Either<Failure, bool>> updateTambur({
       shift: shift,
       radius: radius,
       format: format,
+      brand: brand,
     );
 
     LoggerService.d(response.body);
@@ -67,7 +72,7 @@ Future<Either<Failure, bool>> updateTambur({
       ServerFailure(
         message: e.message,
         statusCode: e.statusCode,
-        errorText: e.errorText ?? '',
+        errorText: e.errorText,
       ),
     );
   } catch (e) {
@@ -80,6 +85,44 @@ Future<Either<Failure, bool>> updateTambur({
     );
   }
 }
+
+  @override
+  Future<Either<Failure, List<BrandEntity>>> getBrands() async {
+    try {
+      final response = await dataSource.getBrands();
+      if (response.statusCode == 200) {
+        final List<dynamic> decoded = json.decode(utf8.decode(response.bodyBytes));
+        final List<BrandEntity> brands = decoded
+            .map((item) => BrandModel.fromJson(item as Map<String, dynamic>).toEntity())
+            .toList();
+        return Right(brands);
+      } else {
+        return Left(
+          ServerFailure(
+            message: response.body,
+            statusCode: response.statusCode,
+            errorText: response.body,
+          ),
+        );
+      }
+    } on ServerException catch (e) {
+      return Left(
+        ServerFailure(
+          message: e.message,
+          statusCode: e.statusCode,
+          errorText: e.errorText,
+        ),
+      );
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          message: 'Server xatosi yuz berdi: $e',
+          statusCode: 500,
+          errorText: e.toString(),
+        ),
+      );
+    }
+  }
 
 
   @override

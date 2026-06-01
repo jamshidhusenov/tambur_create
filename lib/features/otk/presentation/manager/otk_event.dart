@@ -40,13 +40,28 @@ class UpdateTamburEvent extends OtkEvent {
   final String shift;
   final int radius;
   final int format;
+  final int? brand;
   final Function() onSuccess;
   final Function(String error) onError;
-  const UpdateTamburEvent({required this.tamburId, required this.shift, required this.radius, required this.format, 
-  required this.onSuccess, required this.onError});
+  const UpdateTamburEvent({
+    required this.tamburId,
+    required this.shift,
+    required this.radius,
+    required this.format,
+    this.brand,
+    required this.onSuccess,
+    required this.onError,
+  });
 
   @override
-  List<Object?> get props => [tamburId, shift, radius, format, onSuccess, onError];
+  List<Object?> get props => [tamburId, shift, radius, format, brand, onSuccess, onError];
+}
+
+class GetBrandsEvent extends OtkEvent {
+  const GetBrandsEvent();
+
+  @override
+  List<Object?> get props => [];
 }
 
 

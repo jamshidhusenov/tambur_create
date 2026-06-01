@@ -15,26 +15,30 @@ class OtkLoading extends OtkState {
 }
 
 class OtkSuccess extends OtkState {
-  final ListTamburModel listTambur  ;
+  final ListTamburModel listTambur;
+  final List<BrandEntity>? brands;
 
   const OtkSuccess({
     required this.listTambur,
+    this.brands,
   });
 
   // copyWith
   OtkSuccess copyWith({
     ListTamburModel? listTambur,
+    List<BrandEntity>? brands,
   }) {
     return OtkSuccess(
       listTambur: listTambur ?? this.listTambur,
+      brands: brands ?? this.brands,
     );
   }
 
   @override
   List<Object?> get props => [
     listTambur,
+    brands,
   ];
-  
 }
 
 class OtkFailure extends OtkState {
