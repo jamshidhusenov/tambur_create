@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tambur_create/core/error/failure.dart';
-import 'package:tambur_create/features/otk/data/model/list_tambur_model.dart';
-import 'package:tambur_create/features/otk/domain/entities/brand_entity.dart';
-import 'package:tambur_create/features/otk/domain/repositories/otk_repository.dart';
+import 'package:tambur_create/features/roll_create/data/model/list_tambur_model.dart';
+import 'package:tambur_create/features/roll_create/domain/entities/brand_entity.dart';
+import 'package:tambur_create/features/roll_create/domain/repositories/otk_repository.dart';
 
 class OtkUseCase implements OtkRepository {
   final OtkRepository repository;

@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tambur_create/core/services/version_checker/version_update_screen.dart';
 import 'package:tambur_create/features/login/presentation/pages/login_page.dart';
-import 'package:tambur_create/features/otk/presentation/pages/otk_form_page.dart';
+import 'package:tambur_create/features/roll_create/presentation/pages/otk_form_page.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',

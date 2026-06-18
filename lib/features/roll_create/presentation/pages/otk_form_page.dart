@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tambur_create/core/theme/app_colors.dart';
-import 'package:tambur_create/features/otk/presentation/pages/tambur_detail_page.dart';
-import 'package:tambur_create/features/otk/presentation/widgets/roll_widget.dart';
-import 'package:tambur_create/features/otk/presentation/widgets/tambur_widget.dart';
+import 'package:tambur_create/features/roll_create/presentation/pages/tambur_detail_page.dart';
+import 'package:tambur_create/features/roll_create/presentation/widgets/roll_widget.dart';
+import 'package:tambur_create/features/roll_create/presentation/widgets/tambur_widget.dart';
 import '../manager/otk_bloc.dart';
 import '../widgets/logout_dialog.dart';
 

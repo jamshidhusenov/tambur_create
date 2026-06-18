@@ -9,8 +9,8 @@ import 'package:tambur_create/core/di/setup_locator.dart';
 import 'package:tambur_create/core/network/connectivity_service.dart';
 import 'package:tambur_create/core/network/connectivity_widget.dart';
 import 'package:tambur_create/core/services/observer.dart';
-import 'package:tambur_create/features/otk/domain/use_cases/otk_use_case.dart';
-import 'package:tambur_create/features/otk/presentation/manager/otk_bloc.dart';
+import 'package:tambur_create/features/roll_create/domain/use_cases/otk_use_case.dart';
+import 'package:tambur_create/features/roll_create/presentation/manager/otk_bloc.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:tambur_create/config/routes/routes.dart';
 

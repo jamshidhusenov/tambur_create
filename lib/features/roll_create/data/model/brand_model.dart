@@ -1,4 +1,4 @@
-import 'package:tambur_create/features/otk/domain/entities/brand_entity.dart';
+import 'package:tambur_create/features/roll_create/domain/entities/brand_entity.dart';
 
 class BrandModel extends BrandEntity {
   const BrandModel({

@@ -6,9 +6,9 @@ import 'package:tambur_create/core/services/token_service.dart';
 import 'package:tambur_create/features/login/data/data_sources/user_remote_data_source.dart';
 import 'package:tambur_create/features/login/data/repositories/user_repository_impl.dart';
 import 'package:tambur_create/features/login/domain/use_cases/login_user_use_case.dart';
-import 'package:tambur_create/features/otk/data/data_sources/otk_remote_data_source.dart';
-import 'package:tambur_create/features/otk/data/repositories/otk_repository_impl.dart';
-import 'package:tambur_create/features/otk/domain/use_cases/otk_use_case.dart';
+import 'package:tambur_create/features/roll_create/data/data_sources/otk_remote_data_source.dart';
+import 'package:tambur_create/features/roll_create/data/repositories/otk_repository_impl.dart';
+import 'package:tambur_create/features/roll_create/domain/use_cases/otk_use_case.dart';
 
 final GetIt locator = GetIt.instance;
 

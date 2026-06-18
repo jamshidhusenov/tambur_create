@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:tambur_create/core/extensions/widget_extensions.dart';
 import 'package:tambur_create/features/common_widgets/w_button.dart';
-import 'package:tambur_create/features/otk/data/model/list_tambur_model.dart';
+import 'package:tambur_create/features/roll_create/data/model/list_tambur_model.dart';
 
 class TamburWidget extends StatefulWidget {
   final Tambur item;

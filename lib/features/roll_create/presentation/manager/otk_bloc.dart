@@ -4,9 +4,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tambur_create/core/ui/dialog_utils.dart';
-import 'package:tambur_create/features/otk/data/model/list_tambur_model.dart';
-import 'package:tambur_create/features/otk/domain/entities/brand_entity.dart';
-import 'package:tambur_create/features/otk/domain/use_cases/otk_use_case.dart';
+import 'package:tambur_create/features/roll_create/data/model/list_tambur_model.dart';
+import 'package:tambur_create/features/roll_create/domain/entities/brand_entity.dart';
+import 'package:tambur_create/features/roll_create/domain/use_cases/otk_use_case.dart';
 
 part 'otk_event.dart';
 part 'otk_state.dart';

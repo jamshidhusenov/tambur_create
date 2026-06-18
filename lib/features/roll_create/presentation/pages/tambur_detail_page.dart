@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tambur_create/core/theme/app_colors.dart';
 import 'package:tambur_create/core/ui/dialog_utils.dart';
-import 'package:tambur_create/features/otk/data/model/list_tambur_model.dart';
-import 'package:tambur_create/features/otk/domain/entities/brand_entity.dart';
-import 'package:tambur_create/features/otk/presentation/manager/otk_bloc.dart';
-import 'package:tambur_create/features/otk/presentation/widgets/textfiled_widget.dart';
+import 'package:tambur_create/features/roll_create/data/model/list_tambur_model.dart';
+import 'package:tambur_create/features/roll_create/domain/entities/brand_entity.dart';
+import 'package:tambur_create/features/roll_create/presentation/manager/otk_bloc.dart';
+import 'package:tambur_create/features/roll_create/presentation/widgets/textfiled_widget.dart';
 
 class TamburDetailPage extends StatelessWidget {
   final Tambur tambur;

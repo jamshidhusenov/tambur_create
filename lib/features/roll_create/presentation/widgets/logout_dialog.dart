@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tambur_create/features/otk/domain/services/logout_service.dart';
+import 'package:tambur_create/features/roll_create/domain/services/logout_service.dart';
 
 class LogoutDialog {
   /// Shows an iOS-style logout confirmation dialog
